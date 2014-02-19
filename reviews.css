@@ -1,0 +1,36 @@
+body {
+	background: #f7f7f7;
+
+	font: 1em Open Sans; color: #222;
+	line-height: 1.5em;
+}
+span { 
+	display: block;
+}
+
+a { color: black; text-decoration: none; font-weight: normal; }
+
+.prof {
+	margin: 3% 0%;
+	padding: 1%;
+	background-color: #bbb;
+	border: 2px solid #999; 
+	border-radius: 20px;
+	}
+.prof:hover { background-color: #999; cursor: pointer; }
+
+.name { font-weight: bold; }
+
+#container { 
+	background-color: #ddd;
+
+	position: absolute;
+	top: 0%; left: 30%;
+	width: 40%;
+
+	padding: 1%;
+	text-align: center;
+}
+
+#professors { padding: 5% 0% }
+

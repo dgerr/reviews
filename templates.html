@@ -1,0 +1,53 @@
+<template name="login">
+	{{loginButtons}}
+	<br>
+  <a href="{{pathFor 'reviews'}}"><b>Home</b></a>
+  <br>
+</template>
+
+<template name="reviews">
+ 	<div>
+	     <b><span class="descr">{{title}}</span></b>
+    	 <input type="button" class="sort" value="Change sorting" />
+  	</div>
+
+  	<div id="professors">
+    	{{#each profs}}
+    	  {{> prof}}
+    	{{/each}}
+	</div>
+</template>
+
+<template name="prof">
+	<a class="prof-link" href="#">
+    <div class="prof">
+      	<span class="name">{{name}}</span>
+      	<span class="rating">{{rating}}</span>
+    </div>
+  </a>
+</template>
+
+<!--from spin package-->
+<template name="loading">
+  {{>spinner}}
+</template>
+
+<template name="profPage">
+{{> prof}}
+<ul class="reviews">
+  {{#each reviews}}
+    {{> review}}
+  {{/each}}
+</ul>
+</template>
+
+<template name="review">
+  <li>
+    <h4>
+      <span class="author">{{author}}</span>
+      <span class="submitted">{{submittedText}}</span>
+      <span class="rating">{{rating}}</span>
+    </h4>
+    <p>{{body}}</p>
+  </li>
+</template>
