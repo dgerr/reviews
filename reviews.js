@@ -64,7 +64,11 @@ if (Meteor.isClient) {
     submittedText: function() {
       var today = new Date(this.submitted);
        return (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear(); //toString();
-  }
+  },
+    authorHelper: function(){
+      if (this.author != undefined) return (this.author).split('@')[0];
+      return "Null User"
+    }
   });
 
   Template.prof.helpers({

@@ -22,9 +22,9 @@ Meteor.methods({
 		if (!prof)
 			 throw new Meteor.Error(422, 'You must review a professor');
 
-		review = _.extend(_.pick(reviewAttributes, 'postId', 'body'), {
+		review = _.extend(_.pick(reviewAttributes, 'postId', 'rating', 'body'), {
 			 userId: user._id,
-			 author: user.username,
+			 author: user.emails[0].address,
 			 submitted: new Date().getTime()
 		});
 

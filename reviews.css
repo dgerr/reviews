@@ -23,7 +23,7 @@ a { color: black; text-decoration: none; font-weight: normal; }
 	padding: 2%;
 	background-color: #ccc;
 	border: 2px solid #999; 
-	border-radius: 20px;
+	border-radius: 15px;
 	}
 .prof:hover { background-color: #999; cursor: pointer; }
 
@@ -54,7 +54,7 @@ ul.reviews li {
 	margin: 2% 0%;
 	padding: 2% 1%;
 	background: #eee;
-	border: 1px solid #bbb; border-radius: 20px;
+	border: 1px solid #bbb; border-radius: 15px;
 	font-size: 0.8em;
 }
 

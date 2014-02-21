@@ -50,7 +50,7 @@
 
 <template name="review">
   <li>
-      <span class="author"><b>{{author}}</b></span>
+      <span class="author"><b>{{authorHelper}}</b></span>
       <span class="rating">gave  <b>{{rating}}</b> stars</span>
       <span class="submitted">on <b>{{submittedText}}</b></span>
     <p>{{body}}</p>
@@ -65,7 +65,7 @@
      <div class="controls">   
        <label for="rating">Rate on a scale from 1-5: </label>
        <textarea name="rating"></textarea>
-
+       <br>
        <label for="body">Review this professor:</label>
        <textarea name="body"></textarea>
      </div>
@@ -94,7 +94,7 @@
          <span class="icon-bar"></span>
        </a>
     
-       <a class="brand" href="{{pathFor 'review'}}">Reviews Home</a>
+       <a class="brand" href="{{pathFor 'reviews'}}">Reviews Home</a>
       
        <div class="nav-collapse collapse">
          <ul class="nav pull-right">
