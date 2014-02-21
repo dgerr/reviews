@@ -1,19 +1,27 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
 	background: #f7f7f7;
 
 	font: 1em Open Sans; color: #222;
 	line-height: 1.5em;
 }
-span { 
+span.name { 
 	display: block;
 }
+
+li span.submitted, li span.rating {font-size: .75em; }
+
+span.reviews-count { font-size: 0.85em; color: #333; }
+.reviews-count:before { content: ' ('; }
+.reviews-count:after { content: ')'; }
 
 a { color: black; text-decoration: none; font-weight: normal; }
 
 .prof {
-	margin: 3% 0%;
-	padding: 1%;
-	background-color: #bbb;
+	margin: 5% 0%;
+	padding: 2%;
+	background-color: #ccc;
 	border: 2px solid #999; 
 	border-radius: 20px;
 	}
@@ -22,10 +30,13 @@ a { color: black; text-decoration: none; font-weight: normal; }
 .name { font-weight: bold; }
 
 #container { 
-	background-color: #ddd;
+/*	background-color: #ddd; */
+	border-left: 2px dashed #ddd;
+	border-right: 2px dashed #ddd;
 
 	position: absolute;
-	top: 0%; left: 30%;
+	/*top: 0%;*/
+	left: 30%;
 	width: 40%;
 
 	padding: 1%;
@@ -34,3 +45,22 @@ a { color: black; text-decoration: none; font-weight: normal; }
 
 #professors { padding: 5% 0% }
 
+ul.reviews {
+	padding: 0; margin: 0;
+	list-style-type: none; 
+}
+
+ul.reviews li { 
+	margin: 2% 0%;
+	padding: 2% 1%;
+	background: #eee;
+	border: 1px solid #bbb; border-radius: 20px;
+	font-size: 0.8em;
+}
+
+label, textarea { display: block; }
+
+textarea { 
+	width: 70%;
+	margin: 0 auto;
+}

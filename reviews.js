@@ -1,13 +1,21 @@
 Profs = new Meteor.Collection("profs");
 
 //soon!
-Reviews = new Meteor.Collection("reviews"); //much like Comments
+//Reviews = new Meteor.Collection("reviews"); //much like Comments
 
+//testing?
+Deps.autorun(function() {
+ console.log('There are ' + Profs.find().count() + ' professors entered.');
+});
 
+//move to clients/main.js
 if (Meteor.isClient) {
   Meteor.startup(function() {
       Session.set("sort_order", {name: 1, rating: -1});
   });
+
+  Meteor.subscribe('profs');
+  Meteor.subscribe('reviews');
 
   Template.reviews.title = function() {
     if (Session.get("sort_order") != undefined)
@@ -54,13 +62,41 @@ if (Meteor.isClient) {
 
   Template.review.helpers({
     submittedText: function() {
-       return new Date(this.submitted).toString();
+      var today = new Date(this.submitted);
+       return (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear(); //toString();
   }
-  }) 
+  });
+
+  Template.prof.helpers({
+    reviewsCount: function() {
+      return Reviews.find({postId: this._id}).count();
+     }
+  });
+
+Template.reviewSubmit.events({
+   'submit form': function(e, template) {
+     e.preventDefault();
+     var $body = $(e.target).find('[name=body]');
+     var $rating = $(e.target).find('[name=rating]');
+     var comment = {
+       rating: $rating.val(),
+       body: $body.val(),
+       postId: template.data._id
+       };
+   Meteor.call('review', comment, function(error, commentId) {
+     if (error) throwError(error.reason);
+     else {
+      $rating.val('');
+      $body.val('');
+    }
+   });
+   }
+});
+
 
 };
 
-
+//move to server/main.js
 if (Meteor.isServer) {
   Meteor.startup(function() {   // code to run on server at startup
 //   Profs.remove({});

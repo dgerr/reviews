@@ -4,12 +4,13 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
 insecure
 preserve-inputs
 spin
-accounts-ui
 accounts-password
 code-prettify
 jquery
 iron-router
+bootstrap
+underscore
+accounts-ui-bootstrap-dropdown

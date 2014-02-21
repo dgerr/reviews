@@ -1,4 +1,4 @@
-<template name="login">
+<template name="loginOld">
 	{{loginButtons}}
 	<br>
   <a href="{{pathFor 'reviews'}}"><b>Home</b></a>
@@ -23,6 +23,7 @@
     <div class="prof">
       	<span class="name">{{name}}</span>
       	<span class="rating">{{rating}}</span>
+        <span class="reviews-count">{{reviewsCount}} reviews</span>
     </div>
   </a>
 </template>
@@ -39,15 +40,68 @@
     {{> review}}
   {{/each}}
 </ul>
+
+{{#if currentUser}}
+ {{> reviewSubmit}}
+ {{else}}
+ <p>Please log in to leave a review.</p>
+ {{/if}}
 </template>
 
 <template name="review">
   <li>
-    <h4>
-      <span class="author">{{author}}</span>
-      <span class="submitted">{{submittedText}}</span>
-      <span class="rating">{{rating}}</span>
-    </h4>
+      <span class="author"><b>{{author}}</b></span>
+      <span class="rating">gave  <b>{{rating}}</b> stars</span>
+      <span class="submitted">on <b>{{submittedText}}</b></span>
     <p>{{body}}</p>
   </li>
+</template>
+
+
+<template name="reviewSubmit">
+  <br>
+   <form name="comment" class="comment-form">
+   <div class="control-group">
+     <div class="controls">   
+       <label for="rating">Rate on a scale from 1-5: </label>
+       <textarea name="rating"></textarea>
+
+       <label for="body">Review this professor:</label>
+       <textarea name="body"></textarea>
+     </div>
+   </div>
+
+   <div class="control-group">
+
+     <div class="controls">
+     <button type="submit" class="btn">Add Review</button>
+     </div>
+
+   </div>
+   </form>
+</template>
+
+
+
+
+<template name="header">
+   <header class="navbar">
+     <div class="navbar-inner">
+       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collap
+      se">
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </a>
+    
+       <a class="brand" href="{{pathFor 'review'}}">Reviews Home</a>
+      
+       <div class="nav-collapse collapse">
+         <ul class="nav pull-right">
+         <li>{{loginButtons}}</li>
+         </ul>
+       </div>
+
+     </div>
+   </header>
 </template>
