@@ -1,5 +1,19 @@
 Reviews = new Meteor.Collection("reviews");
 
+Reviews.allow({
+	 insert: function(userId, doc) {
+		 // only allow posting if you are logged in
+		 return !! userId;
+	 },
+	 update: function(userId, doc){
+	 	//allow updating if you are logged in, AND it was your review originally
+	 	return !! userId && (doc.userId == userId); 
+	 },
+	 remove: function(userId, doc){
+	 	//allow updating if you are logged in, AND it was your review originally
+	 	return !! userId && (doc.userId == userId); 
+	 },
+});
 
 Meteor.methods({
 	 review: function(reviewAttributes) {

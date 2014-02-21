@@ -16,6 +16,10 @@ span.reviews-count { font-size: 0.85em; color: #333; }
 .reviews-count:before { content: ' ('; }
 .reviews-count:after { content: ')'; }
 
+ .edit-form {display: none;} 
+
+.edit-review { font-weight: bold; text-decoration: underline; }
+
 a { color: black; text-decoration: none; font-weight: normal; }
 
 .prof {

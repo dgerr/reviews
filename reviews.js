@@ -68,8 +68,30 @@ if (Meteor.isClient) {
     authorHelper: function(){
       if (this.author != undefined) return (this.author).split('@')[0];
       return "Null User"
+    },
+    ownReview: function(){
+      if (Meteor.user()._id == this.userId) {
+//        console.log('It\'s your own review!');
+        return true; 
+      }
+
     }
   });
+
+  Template.review.events({
+    'click .edit-review': function(e){
+      $(e.target).next('.edit-form').toggle(); //unhide hidden Edit node!
+    }
+  });
+
+  Template.reviewEdit.events({
+    'submit form' : function(e) {
+       $(e.target).parent('.edit-form').toggle();
+    },
+    'click .delete' : function() {
+       $(e.target).parent('.edit-form').toggle();
+    }
+  })
 
   Template.prof.helpers({
     reviewsCount: function() {

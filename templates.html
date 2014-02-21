@@ -42,7 +42,7 @@
 </ul>
 
 {{#if currentUser}}
- {{> reviewSubmit}}
+   {{> reviewSubmit}}
  {{else}}
  <p>Please log in to leave a review.</p>
  {{/if}}
@@ -54,6 +54,11 @@
       <span class="rating">gave  <b>{{rating}}</b> stars</span>
       <span class="submitted">on <b>{{submittedText}}</b></span>
     <p>{{body}}</p>
+    <br>
+    {{#if ownReview}} 
+    <a class="edit-review" href="#">Edit review </a>
+    <div class="edit-form">{{> reviewEdit}}</div>
+    {{/if}}
   </li>
 </template>
 
