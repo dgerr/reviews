@@ -5,7 +5,7 @@ Template.reviewEdit.events({
 		 var currentreviewId = this._id;
 
 		 var reviewProperties = {
-			 rating: $(e.target).find('[name=rating]').val(),
+			 rating: Session.get('rating'), //$(e.target).find('[name=rating]').val(),
 			 body: $(e.target).find('[name=body]').val()
 		 }
 

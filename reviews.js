@@ -57,6 +57,12 @@ if (Meteor.isClient) {
   Template.profPage.helpers({
     reviews: function() {
       return Reviews.find({postId: this._id});
+    },
+
+    alreadyReviewed: function(){
+      if (Reviews.findOne({userId: Meteor.user()._id}) !== undefined)
+        return true;
+      return false; 
     }
   });
 
@@ -102,18 +108,24 @@ if (Meteor.isClient) {
 Template.reviewSubmit.events({
    'submit form': function(e, template) {
      e.preventDefault();
+
+     console.log('Submitted form. Value of Session.get(rating) is', Session.get('rating'));
+
      var $body = $(e.target).find('[name=body]');
-     var $rating = $(e.target).find('[name=rating]');
+     //var $rating = $(e.target).find('[name=rating]');
      var comment = {
-       rating: $rating.val(),
+       rating: Session.get('rating'), //$rating.val(),
        body: $body.val(),
        postId: template.data._id
        };
    Meteor.call('review', comment, function(error, commentId) {
      if (error) throwError(error.reason);
      else {
-      $rating.val('');
+      Session.set('rating', 0);
+      console.log('New value of Session.get(rating) is', Session.get('rating'));
+//      $rating.val(0);
       $body.val('');
+      $('.rating-text').html('');
     }
    });
    }

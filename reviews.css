@@ -10,6 +10,7 @@ span.name {
 	display: block;
 }
 
+div[name=rating] { display: none; }
 li span.submitted, li span.rating {font-size: .75em; }
 
 span.reviews-count { font-size: 0.85em; color: #333; }

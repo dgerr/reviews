@@ -42,10 +42,14 @@
 </ul>
 
 {{#if currentUser}}
-   {{> reviewSubmit}}
- {{else}}
- <p>Please log in to leave a review.</p>
+  {{#if alreadyReviewed}}
+    <p>You can't leave multiple reviews! Please edit your previous review instead.</p>
+  {{else}}
+    {{> reviewSubmit}}
  {{/if}}
+{{else}}
+ <p>Please log in to leave a review.</p>
+{{/if}}
 </template>
 
 <template name="review">
@@ -69,7 +73,17 @@
    <div class="control-group">
      <div class="controls">   
        <label for="rating">Rate on a scale from 1-5: </label>
-       <textarea name="rating"></textarea>
+       <!--<textarea name="rating"></textarea>-->
+        <div class="rating">
+          <span class="star">☆</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
+          <div class="rating-text"></div>
+          <div name="rating"></div>
+        </div>
+
        <br>
        <label for="body">Review this professor:</label>
        <textarea name="body"></textarea>
