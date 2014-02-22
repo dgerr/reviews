@@ -3,7 +3,7 @@ Session.set('rating', 0);
 //var rating_text = '';
 //var rating = 0;
 
-Template.reviewSubmit.rendered  = function(){
+var starfunction = function(){
 
     $('span.star').mouseenter(function(){
     $(this).prevAll().andSelf().html('★').css('color','gold');//.css('opacity','0.5');
@@ -24,10 +24,15 @@ Template.reviewSubmit.rendered  = function(){
     Session.set('rating', $(this).index()+1); 
     Session.set('rating_text', 'Rating: <b>' + ($(this).index()+1) + ' stars</b>');
     $('.rating-text').html(Session.get('rating_text'));
-    $('div[name="rating"]').html(Session.get('rating'));
+//    $('div[name="rating"]').html(Session.get('rating'));
+
     //rating = $(this).index()+1;
     //rating_text = 'Rating: <b>' + ($(this).index()+1) + ' stars</b>';
      //$('.rating-text').html(rating_text);
   });
 
 };
+
+
+Template.reviewEdit.rendered = starfunction;
+Template.reviewSubmit.rendered = starfunction;
