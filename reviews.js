@@ -60,8 +60,13 @@ if (Meteor.isClient) {
     },
 
     alreadyReviewed: function(){
-      if (Reviews.findOne({userId: Meteor.user()._id}) !== undefined)
-        return true;
+      var arr1 = Reviews.find({postId: this._id}).fetch();
+      var arr2 = Reviews.find({userId: Meteor.user()._id}).fetch();
+      var intersect = _.intersectionObjects(arr1, arr2);
+
+//      console.log('Did I already review?', intersect);
+
+      if (intersect.length > 0) return true;
       return false; 
     }
   });

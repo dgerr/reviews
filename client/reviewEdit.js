@@ -17,6 +17,7 @@ Template.reviewEdit.events({
 		 } else {
 //			commenting thhis out for now...
 // var pathname = window.location.pathname;
+			Session.set('rating',0);
 //		 Router.go('reviewPage', {_id: currentreviewId});
 			 }
 		 });
