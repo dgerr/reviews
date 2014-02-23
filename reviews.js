@@ -73,8 +73,21 @@ if (Meteor.isClient) {
        return (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear(); //toString();
   },
     authorHelper: function(){
-      if (this.author != undefined) return (this.author).split('@')[0];
-      return "Null User"
+      /* var newAnon = jQuery.extend({}, Session.get('anon'));
+      console.log('newAnon: ', newAnon);
+
+      if (newAnon) { 
+        console.log('anon?? ', Session.get('anon'));
+        setTimeout(function(){ 
+          console.log('Resetting Session one second later!');
+          Session.set('anon', undefined);
+        }, 1000);
+        return 'Anonymous';
+      } */
+      if (this.author != undefined) 
+        return (this.author).split('@')[0];
+      else
+        return "Null User"
     },
     ownReview: function(){
       if (Meteor.user()._id == this.userId) {
@@ -119,6 +132,9 @@ if (Meteor.isClient) {
 Template.reviewSubmit.events({
    'submit form': function(e, template) {
      e.preventDefault();
+
+     if ($(e.target).find('[name=anon]').prop('checked'))
+        Session.set('anon',true);
 
      console.log('Submitted form. Value of Session.get(rating) is', Session.get('rating'));
 
