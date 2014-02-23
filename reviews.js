@@ -1,7 +1,5 @@
 Profs = new Meteor.Collection("profs");
 
-//soon!
-//Reviews = new Meteor.Collection("reviews"); //much like Comments
 
 //testing?
 Deps.autorun(function() {
@@ -32,7 +30,7 @@ if (Meteor.isClient) {
 
         var professor = $this.children().children(".name").text();
     
-        professor = professor.replace(" ", "-").toLowerCase();
+        professor = professor.split(" ").join("-").toLowerCase();
         $this.attr('href', 'prof/'+professor);
       },
 
@@ -64,8 +62,6 @@ if (Meteor.isClient) {
       var arr2 = Reviews.find({userId: Meteor.user()._id}).fetch();
       var intersect = _.intersectionObjects(arr1, arr2);
 
-//      console.log('Did I already review?', intersect);
-
       if (intersect.length > 0) return true;
       return false; 
     }
@@ -82,7 +78,6 @@ if (Meteor.isClient) {
     },
     ownReview: function(){
       if (Meteor.user()._id == this.userId) {
-//        console.log('It\'s your own review!');
         return true; 
       }
 
@@ -102,11 +97,22 @@ if (Meteor.isClient) {
     'click .delete' : function() {
        $(e.target).parent('.edit-form').toggle();
     }
-  })
+  });
 
   Template.prof.helpers({
     reviewsCount: function() {
       return Reviews.find({postId: this._id}).count();
+     },
+     ratingHelper: function(){
+        var rating = 0;
+        var reviews = Reviews.find({postId: this._id}).fetch();
+        if (reviews.length == 0) return 'Not yet rated';
+        //else
+        for (var i=0; i<reviews.length; i++)
+          rating += reviews[i].rating;
+        rating = rating / reviews.length;
+
+        return rating + ' stars'; 
      }
   });
 
@@ -123,19 +129,59 @@ Template.reviewSubmit.events({
        body: $body.val(),
        postId: template.data._id
        };
-   Meteor.call('review', comment, function(error, commentId) {
-     if (error) throwError(error.reason);
-     else {
-      Session.set('rating', 0);
-      console.log('New value of Session.get(rating) is', Session.get('rating'));
-//      $rating.val(0);
-      $body.val('');
-      $('.rating-text').html('');
-    }
-   });
-   }
-});
 
+    Session.set('most_recent_review', comment);
+    console.log('Changed m_r_r: ', Session.get('most_recent_review'));
+
+     Meteor.call('review', comment, function(error, commentId) {
+       if (error) throwError(error.reason);
+       else {
+
+        Session.set('rating', 0);
+        console.log('New value of Session.get(rating) is', Session.get('rating'));
+  //      $rating.val(0);
+        $body.val('');
+        $('.rating-text').html('');
+      }
+   });
+
+   } //ends 'submit form' event
+}); //ends reviewSubmit events
+
+/*
+Deps.autorun(function(){  
+  var most_recent_review = Session.get('most_recent_review');
+  updateReview(most_recent_review);
+}); 
+*/
+
+function updateReview(most_recent_review){
+  if (most_recent_review == 0 || most_recent_review == undefined) {
+    console.log('No overall ratings to update.');
+    return; //do nothing
+  }
+
+  console.log('A review was just inserted!');
+  console.log(most_recent_review);
+
+  var prof = Profs.find({_id: most_recent_review.postId}).fetch();
+  //console.log('prof: ', prof);
+  var prof_reviews = Reviews.find({postId: most_recent_review.postId}).fetch();
+  //console.log('prof_reviews: ', prof);
+
+  var new_rating = 0;
+  for (var i=0; i<prof_reviews.length; i++)
+    new_rating += prof_reviews[i].rating;
+  new_rating = new_rating / prof_reviews.length;
+  
+//  prof[0].rating = rating; 
+  Profs.update(most_recent_review.postId, {$set: { rating: new_rating }}, function(error){
+    if (error) alert(error.reason);
+    else console.log('Success!');
+  });
+  console.log('prof[0].rating: ', prof[0].rating);
+  
+  };
 
 };
 
@@ -162,7 +208,8 @@ if (Meteor.isServer) {
                    "Nikola Tesla"];
 
       for (var i = 0; i < names.length; i++)
-        Profs.insert({name: names[i], rating: parseFloat(Random.fraction()*3 + 2).toFixed(1) });
+        Profs.insert({name: names[i]}); //, rating: 0});
+//        Profs.insert({name: names[i], rating: parseFloat(Random.fraction()*3 + 2).toFixed(1) });
     
   //TUTORIAL stuff. 
   // Fixture data 

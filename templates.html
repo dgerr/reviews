@@ -22,7 +22,7 @@
 	<a class="prof-link" href="#">
     <div class="prof">
       	<span class="name">{{name}}</span>
-      	<span class="rating">{{rating}}</span>
+      	<span class="rating">{{ratingHelper}}</span>
         <span class="reviews-count">{{reviewsCount}} reviews</span>
     </div>
   </a>
@@ -59,9 +59,11 @@
       <span class="submitted">on <b>{{submittedText}}</b></span>
     <p>{{body}}</p>
     <br>
-    {{#if ownReview}} 
-    <a class="edit-review" href="#">Edit review </a>
-    <div class="edit-form">{{> reviewEdit}}</div>
+    {{#if currentUser}} 
+      {{#if ownReview}} 
+      <a class="edit-review" href="#">Edit review </a>
+      <div class="edit-form">{{> reviewEdit}}</div>
+      {{/if}}
     {{/if}}
   </li>
 </template>
