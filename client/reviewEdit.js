@@ -6,7 +6,9 @@ Template.reviewEdit.events({
 
 		 var reviewProperties = {
 			 rating: Session.get('rating'), //$(e.target).find('[name=rating]').val(),
-			 body: $(e.target).find('[name=body]').val()
+			 body: $(e.target).find('[name=body]').val(),
+			 anon: $(e.target).find('[name=anon]').checked
+
 		 }
 
 	 Reviews.update(currentreviewId, {$set: reviewProperties}, function(error) {

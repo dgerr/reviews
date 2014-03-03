@@ -1,10 +1,12 @@
 Profs = new Meteor.Collection("profs");
 
 
-//testing?
+//APPARENTLY this is not allowed on the server: github.com/meteor/meteor/issues/1868
+/*
 Deps.autorun(function() {
  console.log('There are ' + Profs.find().count() + ' professors entered.');
 });
+*/
 
 //move to clients/main.js
 if (Meteor.isClient) {
@@ -84,10 +86,15 @@ if (Meteor.isClient) {
         }, 1000);
         return 'Anonymous';
       } */
-      if (this.author != undefined) 
+      console.log('this: ', this);
+      console.log('this.anon: ', this.anon);
+
+      if (this.author != undefined && this.anon)
+        return 'Anonymous User';
+      else if (this.author != undefined) 
         return (this.author).split('@')[0];
       else
-        return "Null User"
+        return "Null User (Test)"
     },
     ownReview: function(){
       if (Meteor.user()._id == this.userId) {
@@ -133,21 +140,23 @@ Template.reviewSubmit.events({
    'submit form': function(e, template) {
      e.preventDefault();
 
-     if ($(e.target).find('[name=anon]').prop('checked'))
-        Session.set('anon',true);
-
-     console.log('Submitted form. Value of Session.get(rating) is', Session.get('rating'));
+//     if ($(e.target).find('[name=anon]').prop('checked'))
+//        Session.set('anon',true);
+//     console.log('Submitted form. Value of Session.get(rating) is', Session.get('rating'));
 
      var $body = $(e.target).find('[name=body]');
+     var $anon = $(e.target).find('[name=anon]');
+
      //var $rating = $(e.target).find('[name=rating]');
      var comment = {
        rating: Session.get('rating'), //$rating.val(),
        body: $body.val(),
+       anon: $anon.prop('checked'),
        postId: template.data._id
        };
 
-    Session.set('most_recent_review', comment);
-    console.log('Changed m_r_r: ', Session.get('most_recent_review'));
+//    Session.set('most_recent_review', comment);
+//    console.log('Changed m_r_r: ', Session.get('most_recent_review'));
 
      Meteor.call('review', comment, function(error, commentId) {
        if (error) throwError(error.reason);
@@ -157,6 +166,7 @@ Template.reviewSubmit.events({
         console.log('New value of Session.get(rating) is', Session.get('rating'));
   //      $rating.val(0);
         $body.val('');
+        $anon.prop('checked', false);
         $('.rating-text').html('');
       }
    });
@@ -164,12 +174,6 @@ Template.reviewSubmit.events({
    } //ends 'submit form' event
 }); //ends reviewSubmit events
 
-/*
-Deps.autorun(function(){  
-  var most_recent_review = Session.get('most_recent_review');
-  updateReview(most_recent_review);
-}); 
-*/
 
 function updateReview(most_recent_review){
   if (most_recent_review == 0 || most_recent_review == undefined) {
@@ -243,15 +247,15 @@ if (Meteor.isServer) {
   var sacha = Meteor.users.findOne(sachaId);
 
   var changId = Profs.insert({
-    name: 'Stanley Chang',
-    rating: "3.5"
+    name: 'Stanley Chang' //,    rating: "3.5"
   });
 
   Reviews.insert({
     postId: changId,
     userId: tom._id,
     author: tom.profile.name,
-    rating: 4.0, 
+    rating: 4.0,
+    anon: true, 
     submitted: now - 5 * 3600 * 1000,
     body: 'Interesting project Sacha, can I get involved?'
   });
@@ -260,6 +264,7 @@ if (Meteor.isServer) {
     postId: changId,
     userId: sacha._id,
     author: sacha.profile.name,
+    anon: false,
     rating: 4.5,
     submitted: now - 3 * 3600 * 1000,
     body: 'You sure can Tom!'

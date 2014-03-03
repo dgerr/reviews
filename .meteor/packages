@@ -9,7 +9,7 @@ spin
 accounts-password
 code-prettify
 jquery
-iron-router
 bootstrap
 underscore
 accounts-ui-bootstrap-dropdown
+iron-router
