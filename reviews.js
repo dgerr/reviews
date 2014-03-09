@@ -1,6 +1,3 @@
-Profs = new Meteor.Collection("profs");
-
-
 //APPARENTLY this is not allowed on the server: github.com/meteor/meteor/issues/1868
 /*
 Deps.autorun(function() {
@@ -16,6 +13,13 @@ if (Meteor.isClient) {
 
   Meteor.subscribe('profs');
   Meteor.subscribe('reviews');
+
+
+  /******jquery!******/
+  //filter lastname search
+
+  ////////////////////
+
 
   Template.reviews.title = function() {
     if (Session.get("sort_order") != undefined)
@@ -34,6 +38,16 @@ if (Meteor.isClient) {
     
         professor = professor.split(" ").join("-").toLowerCase();
         $this.attr('href', 'prof/'+professor);
+      },
+
+      'keydown #searchbar': function(e){
+        if (e.which == 13) {
+          console.log('Hit enter!');
+          var text = $('input#searchbar').val();
+          var profname = text.split(" ").join("-").toLowerCase();
+          Router.go( '/prof/' + profname );
+        } 
+
       },
 
       'click input.sort': function () {

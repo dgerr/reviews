@@ -7,7 +7,15 @@
 
 <template name="reviews">
  	<div>
-	     <b><span class="descr">{{title}}</span></b>
+
+      <div id="search">
+        <label for="searchbar">Search by last name: </label>
+        <input id="searchbar">
+      </div>
+
+      <br>
+       <b><span class="descr">{{title}}</span></b>
+       <br>
     	 <input type="button" class="sort" value="Change sorting" />
   	</div>
 

@@ -1,5 +1,5 @@
-Reviews = new Meteor.Collection("reviews");
-
+//all of this stuff is only true from client side -- not from server side ... ?
+// http://stackoverflow.com/questions/14547929/meteor-js-allow-deny-rules
 Reviews.allow({
 	 insert: function(userId, doc) {
 		 // only allow posting if you are logged in
@@ -16,6 +16,11 @@ Reviews.allow({
 });
 
 Meteor.methods({
+	 appendTag: function(profAttributes, userId){
+	 var prof = Profs.findOne(profAttributes.postId);
+	 Profs.update(prof, { $addToSet: { invited: userId } });
+	 },
+
 	 review: function(reviewAttributes) {
 		 var user = Meteor.user();
 		 var prof = Profs.findOne(reviewAttributes.postId);

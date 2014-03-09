@@ -1,5 +1,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+span[role=status] { display: block; }
+ul.ui-autocomplete { display: inline-block; }
+li.ui-menu-item { background: white; display: block; list-style-type: none; }
+
 body {
 	background: #f7f7f7;
 

@@ -4,7 +4,8 @@
     "basePackages": {
       "spin": {},
       "accounts-ui-bootstrap-dropdown": {},
-      "iron-router": {}
+      "iron-router": {},
+      "jquery-ui": {}
     },
     "packages": {
       "spin": {
@@ -21,6 +22,11 @@
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.6.4",
         "commit": "927bbaed1b87894fb6fb70807f74ff3a5bd89f29"
+      },
+      "jquery-ui": {
+        "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
+        "tag": "v1.9.2",
+        "commit": "c437d45edcf1367df8d5ffa8bad2867758030bd2"
       }
     }
   }

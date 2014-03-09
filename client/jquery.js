@@ -1,3 +1,5 @@
+//Search for person, OR: browse by department. 
+
 Session.set('rating_text', '');
 Session.set('rating', 0);
 //var rating_text = '';
@@ -36,3 +38,23 @@ var starfunction = function(){
 
 Template.reviewEdit.rendered = starfunction;
 Template.reviewSubmit.rendered = starfunction;
+
+//can run Deps.autorun if on client!
+//Deps.autorun(function() {
+ 
+ var autofunction = function(){
+ console.log('There are ' + Profs.find().count() + ' professors entered.');
+
+  var names = []; 
+  var profs = Profs.find().fetch();
+  for (var i=0; i < profs.length; i++){
+    names.push( profs[i].name ); //.split(' ').slice(-1)[0] );
+  }
+  console.log('Names contains: ', names);
+  $('#searchbar').attr('autocomplete','on');
+  $('#searchbar').autocomplete({ source: names }); 
+  console.log( 'name: ', $('#searchbar') );
+
+};
+
+Template.reviews.rendered = autofunction;
