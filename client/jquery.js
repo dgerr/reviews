@@ -50,11 +50,34 @@ Template.reviewSubmit.rendered = starfunction;
   for (var i=0; i < profs.length; i++){
     names.push( profs[i].name ); //.split(' ').slice(-1)[0] );
   }
-  console.log('Names contains: ', names);
   $('#searchbar').attr('autocomplete','on');
   $('#searchbar').autocomplete({ source: names }); 
-  console.log( 'name: ', $('#searchbar') );
 
 };
 
-Template.reviews.rendered = autofunction;
+var dropdown = function(){
+  var sorted = Profs.find({}, {sort: {dept: 1}}).fetch();
+  var depts = ['All'];
+  for (var i=0; i < sorted.length; i++){
+    if (depts.indexOf(sorted[i].dept) == -1)
+        depts.push(sorted[i].dept);
+  }
+
+//  depts = depts.sort(); //just in case lol
+  $('select#dropdown').append('<option value="Select..." selected="selected">Select...</option>');
+  $.each(depts, function(v){
+    $('select#dropdown').append('<option value="'+depts[v]+'">'+depts[v]+'</option>');
+  });
+
+}
+
+Template.reviews.rendered = function(){
+  console.log('Page rendered.');
+  dropdown();
+  autofunction();
+
+  $('option').removeAttr('selected');
+  $('option[value="' + Session.get('selected_dept') + '"]')
+    .attr('selected','selected');
+
+};

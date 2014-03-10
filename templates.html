@@ -11,12 +11,21 @@
       <div id="search">
         <label for="searchbar">Search by last name: </label>
         <input id="searchbar">
+        <button>Go</button>
       </div>
 
+      <div class="browse">
+       <label for="dropdown">Or browse by department: </label>
+       <select id="dropdown">
+       </select>
+      </div>
+      
       <br>
        <b><span class="descr">{{title}}</span></b>
        <br>
     	 <input type="button" class="sort" value="Change sorting" />
+
+       <br>
   	</div>
 
   	<div id="professors">
@@ -29,7 +38,10 @@
 <template name="prof">
 	<a class="prof-link" href="#">
     <div class="prof">
-      	<span class="name">{{name}}</span>
+        <div> 
+        	<span class="name">{{name}}</span>
+          <span class="dept">{{dept}}</span>
+        </div>
       	<span class="rating">{{ratingHelper}}</span>
         <span class="reviews-count">{{reviewsCount}} reviews</span>
     </div>

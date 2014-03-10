@@ -9,16 +9,11 @@ Deps.autorun(function() {
 if (Meteor.isClient) {
   Meteor.startup(function() {
       Session.set("sort_order", {name: 1, rating: -1});
+      Session.set('selected_dept', 'Select...');
   });
 
   Meteor.subscribe('profs');
   Meteor.subscribe('reviews');
-
-
-  /******jquery!******/
-  //filter lastname search
-
-  ////////////////////
 
 
   Template.reviews.title = function() {
@@ -27,27 +22,38 @@ if (Meteor.isClient) {
   }
 
   Template.reviews.profs = function () {
-      return Profs.find({}, {sort: Session.get("sort_order") });
+      var selected = Session.get('selected_dept'); //$('select#dropdown').val();
+      if (selected == 'All')
+        return Profs.find({}, {sort: Session.get("sort_order") });
+      return Profs.find({dept: selected}, {sort: Session.get("sort_order") });
+      
     };
 
   Template.reviews.events({
       'mouseenter .prof-link': function (e) {
         var $this = $(e.target); //METEORRRRR
 
-        var professor = $this.children().children(".name").text();
+        var professor = $this.children('div').children().children(".name").text();
     
         professor = professor.split(" ").join("-").toLowerCase();
         $this.attr('href', 'prof/'+professor);
       },
 
-      'keydown #searchbar': function(e){
-        if (e.which == 13) {
-          console.log('Hit enter!');
-          var text = $('input#searchbar').val();
-          var profname = text.split(" ").join("-").toLowerCase();
-          Router.go( '/prof/' + profname );
-        } 
+      'change select#dropdown': function(e){
+        var selected = $(e.target).val();
+//        console.log('selected: ', selected, '\t profs: ', Profs.find({dept: selected}).fetch());
+        
+        Session.set('selected_dept', selected);
+//        Router.go('reviews', { data: Profs.find({dept: selected}) } );
+        //Template.reviews.profs(); 
+      },
+ 
+      //'click button' too
+      'click button': function(){ goSearch(); }
+      ,
 
+      'keydown #searchbar': function(e){
+        if (e.which == 13) { goSearch(); } 
       },
 
       'click input.sort': function () {
@@ -235,14 +241,16 @@ if (Meteor.isServer) {
 */
 
    if (Profs.find().count() === 0) {
-      var names = ["Ada Lovelace",
-                   "Grace Hopper",
-                   "Marie Curie",
-                   "Carl Friedrich Gauss",
-                   "Nikola Tesla"];
+      var names = [
+                    ["Ada Lovelace", "CS"],
+                    ["Grace Hopper", "BISC"],
+                    ["Marie Curie", "CHEM"],
+                    ["Carl Friedrich Gauss","PHYS"],
+                    ["Nikola Tesla","PHYS"]
+                  ];
 
       for (var i = 0; i < names.length; i++)
-        Profs.insert({name: names[i]}); //, rating: 0});
+        Profs.insert({name: names[i][0], dept: names[i][1]}); //, rating: 0});
 //        Profs.insert({name: names[i], rating: parseFloat(Random.fraction()*3 + 2).toFixed(1) });
     
   //TUTORIAL stuff. 
@@ -261,7 +269,7 @@ if (Meteor.isServer) {
   var sacha = Meteor.users.findOne(sachaId);
 
   var changId = Profs.insert({
-    name: 'Stanley Chang' //,    rating: "3.5"
+    name: 'Stanley Chang', dept: "MATH" //,    rating: "3.5"
   });
 
   Reviews.insert({
@@ -284,8 +292,13 @@ if (Meteor.isServer) {
     body: 'You sure can Tom!'
   });
 
-
-    }
+  }
  
   });
 }
+
+var goSearch = function(){
+  var text = $('input#searchbar').val();
+  var profname = text.split(" ").join("-").toLowerCase();
+  Router.go( '/prof/' + profname );
+};
