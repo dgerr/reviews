@@ -1,9 +1,5 @@
-//Search for person, OR: browse by department. 
-
 Session.set('rating_text', '');
 Session.set('rating', 0);
-//var rating_text = '';
-//var rating = 0;
 
 var starfunction = function(){
 
@@ -28,9 +24,6 @@ var starfunction = function(){
     $('.rating-text').html(Session.get('rating_text'));
 //    $('div[name="rating"]').html(Session.get('rating'));
 
-    //rating = $(this).index()+1;
-    //rating_text = 'Rating: <b>' + ($(this).index()+1) + ' stars</b>';
-     //$('.rating-text').html(rating_text);
   });
 
 };
@@ -76,8 +69,26 @@ Template.reviews.rendered = function(){
   dropdown();
   autofunction();
 
+  if (Session.get('selected_dept') == 'Select...')
+    $('.toggle#browse').hide();
+  else
+    $('.toggle#search').hide();
+
+
   $('option').removeAttr('selected');
   $('option[value="' + Session.get('selected_dept') + '"]')
     .attr('selected','selected');
+
+  $('.search-name').click(function(){
+      $('.toggle#browse').hide('blind', 900);
+      $('.toggle#search').show('blind', 900);      
+
+      setTimeout(function(){ Session.set('selected_dept', 'Select...'); }, 900);
+  });
+  $('.search-dept').click(function(){
+      $('.toggle#browse').show('blind', 900);
+      $('.toggle#search').hide('blind', 900);      
+  });
+
 
 };

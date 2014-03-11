@@ -6,33 +6,39 @@
 </template>
 
 <template name="reviews">
- 	<div>
+<div id="container">
+<div id="search-container">
+  <div class="toggle" id="search">
+    <label for="searchbar">Search by last name: </label>
+    <span class="searchspan">
+      <input type="text" id="searchbar" placeholder="Search by name..."><input type="button" value="Search">
+    </span>
+  
+    <br><br><br>
+    Or <a class="link-toggle search-dept" href="#">browse by department</a>
+  </div>
 
-      <div id="search">
-        <label for="searchbar">Search by last name: </label>
-        <input id="searchbar">
-        <button>Go</button>
-      </div>
+  <div class="toggle" id="browse">
+   <label for="dropdown">Browse by department: </label>
+   <div id="dropdown-container">
+   <select id="dropdown">
+   </select>
+   </div>
 
-      <div class="browse">
-       <label for="dropdown">Or browse by department: </label>
-       <select id="dropdown">
-       </select>
-      </div>
+   <br><br>
+   Or <a class="link-toggle search-name" href="#">search by name</a>
+  </div>
+ 
+</div>
       
-      <br>
-       <b><span class="descr">{{title}}</span></b>
-       <br>
-    	 <input type="button" class="sort" value="Change sorting" />
+       <!--<b><span class="descr">{{title}}</span></b><input type="button" class="sort" value="Change sorting" />-->
 
-       <br>
-  	</div>
-
-  	<div id="professors">
+	<div id="professors">
     	{{#each profs}}
     	  {{> prof}}
     	{{/each}}
 	</div>
+</div><!--end container div-->
 </template>
 
 <template name="prof">
@@ -63,12 +69,12 @@
 
 {{#if currentUser}}
   {{#if alreadyReviewed}}
-    <p>You can't leave multiple reviews! Please edit your previous review instead.</p>
+    <p id="pleaselogin">You can't leave multiple reviews! Please edit your previous review instead.</p>
   {{else}}
     {{> reviewSubmit}}
  {{/if}}
 {{else}}
- <p>Please log in to leave a review.</p>
+ <p id="pleaselogin">Please log in to leave a review.</p>
 {{/if}}
 </template>
 
@@ -78,7 +84,7 @@
       <span class="rating">gave  <b>{{rating}}</b> stars</span>
       <span class="submitted">on <b>{{submittedText}}</b></span>
     <p>{{body}}</p>
-    <br>
+    
     {{#if currentUser}} 
       {{#if ownReview}} 
       <a class="edit-review" href="#">Edit review </a>

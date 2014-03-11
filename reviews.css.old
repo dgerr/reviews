@@ -1,0 +1,88 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+select#dropdown { margin: 0 auto; width: 30%;}
+
+div#search, div#browse { padding: 5% 0%; }
+
+select#dropdown { display: block; }
+span[role=status] { display: none; }
+ul.ui-autocomplete { display: inline-block; }
+li.ui-menu-item { background: white; display: block; list-style-type: none; }
+
+span.dept { 
+	margin-left: 2%;
+	background: #999; 
+	border-radius: 5px; 
+	padding: 0% 1%; 
+	color: white; 
+	font-weight: bold;
+	text-transform: uppercase; 
+	font-size: 0.8em;
+}
+
+body {
+	background: #f7f7f7;
+
+	font: 1em Open Sans; color: #222;
+	line-height: 1.5em;
+}
+
+div[name=rating] { display: none; }
+li span.submitted, li span.rating {font-size: .75em; }
+
+span.reviews-count { font-size: 0.85em; color: #333; }
+.reviews-count:before { content: ' ('; }
+.reviews-count:after { content: ')'; }
+
+ .edit-form {display: none;} 
+
+.edit-review { font-weight: bold; text-decoration: underline; }
+
+a { color: black; text-decoration: none; font-weight: normal; }
+
+.prof {
+	margin: 5% 0%;
+	padding: 2%;
+	background-color: #ccc;
+	border: 2px solid #999; 
+	border-radius: 15px;
+	}
+.prof:hover { opacity: 0.7; cursor: pointer; }
+
+.name { font-weight: bold; }
+
+#container { 
+/*	background-color: #ddd; */
+	border-left: 2px dashed #ddd;
+	border-right: 2px dashed #ddd;
+
+	position: absolute;
+	/*top: 0%;*/
+	left: 30%;
+	width: 40%;
+
+	padding: 1%;
+	text-align: center;
+}
+
+#professors { padding: 5% 0% }
+
+ul.reviews {
+	padding: 0; margin: 0;
+	list-style-type: none; 
+}
+
+ul.reviews li { 
+	margin: 2% 0%;
+	padding: 2% 1%;
+	background: #eee;
+	border: 1px solid #bbb; border-radius: 15px;
+	font-size: 0.8em;
+}
+
+label, textarea { display: block; }
+
+textarea { 
+	width: 70%;
+	margin: 0 auto;
+}
