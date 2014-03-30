@@ -4,28 +4,41 @@ Session.set('rating', 0);
 var starfunction = function(){
 
     $('span.star').mouseenter(function(){
-    $(this).prevAll().andSelf().html('★').css('color','gold');//.css('opacity','0.5');
+    $(this).prevAll().andSelf().html('★').css('color','green');//.css('opacity','0.5');
   });
 
   $('span.star').mouseleave(function(){
-    $(this).prevAll().andSelf().css('color','black'); //.css("opacity","1");
+
+    $(this).prevAll().andSelf().css('color','#aaa'); //.css("opacity","1");
     $('span.star').html('☆');
-    $('span.star').slice(0, Session.get('rating')).html('★');
+    $('span.star').slice(0, Session.get('rating')).html('★').css('color','gold');
   //  $('span').slice(0, rating).html('★');
     
   });
 
   $('span.star').click(function(){
     $(this).prevAll().andSelf().html('★');
-    $(this).nextAll().html('☆');
+    $(this).nextAll().html('☆').css('color','#aaa');
 
     Session.set('rating', $(this).index()+1); 
     Session.set('rating_text', 'Rating: <b>' + ($(this).index()+1) + ' stars</b>');
     $('.rating-text').html(Session.get('rating_text'));
+
+
 //    $('div[name="rating"]').html(Session.get('rating'));
 
   });
 
+};
+
+Template.profPage.rendered = function(){
+    //testing
+
+  //testing
+  Session.set('rating',0);
+  console.log('Rating reset to 0');
+
+  $('.edit-form').hide();
 };
 
 
@@ -65,6 +78,7 @@ var dropdown = function(){
 }
 
 Template.reviews.rendered = function(){
+
   console.log('Page rendered.');
   dropdown();
   autofunction();

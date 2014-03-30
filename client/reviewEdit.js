@@ -7,10 +7,12 @@ Template.reviewEdit.events({
 		 var reviewProperties = {
 			 rating: Session.get('rating'), //$(e.target).find('[name=rating]').val(),
 			 body: $(e.target).find('[name=body]').val(),
-			 anon: $(e.target).find('[name=anon]').checked
+			 anon: $(e.target).find('[name=anon]').prop('checked')
 
-		 }
-
+		 };
+		 console.log( 'Testing!', $(e.target) );
+		 console.log('Body val?', $(e.target).find('[name=body]').val() );
+		 console.log('Anon checked?', $(e.target).find('[name=anon]').prop('checked') );
 	 Reviews.update(currentreviewId, {$set: reviewProperties}, function(error) {
 
 	 if (error) {
@@ -27,7 +29,8 @@ Template.reviewEdit.events({
 
 	 'click .delete': function(e) {
 	 e.preventDefault();
-	 
+
+	//THIS DOESN'T WORK	 
 	 if (confirm("Delete this review?")) {
 		 var currentreviewId = this._id;
 		 Reviews.remove(currentreviewId);

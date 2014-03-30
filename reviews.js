@@ -94,6 +94,13 @@ if (Meteor.isClient) {
       var today = new Date(this.submitted);
        return (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear(); //toString();
   },
+
+    starHelper: function(){
+      var review = Reviews.find({_id: this._id}).fetch()[0];
+      var rating = parseInt(review.rating); 
+      return Array(rating+1).join('★');      
+    },
+
     authorHelper: function(){
       /* var newAnon = jQuery.extend({}, Session.get('anon'));
       console.log('newAnon: ', newAnon);
@@ -106,13 +113,20 @@ if (Meteor.isClient) {
         }, 1000);
         return 'Anonymous';
       } */
-      console.log('this: ', this);
-      console.log('this.anon: ', this.anon);
 
-      if (this.author != undefined && this.anon)
+      var review = Reviews.find({_id: this._id}).fetch()[0];
+
+     console.log('Review: ', review);
+     console.log('Review.anon: ', review.anon);
+
+//     console.log('this: ', this);
+//     console.log('this.anon: ', this.anon);
+
+//replaced 'this' w/'review' errwhere
+      if (review.author != undefined && review.anon)
         return 'Anonymous User';
-      else if (this.author != undefined) 
-        return (this.author).split('@')[0];
+      else if (review.author != undefined) 
+        return (review.author).split('@')[0];
       else
         return "Null User (Test)"
     },
@@ -125,18 +139,47 @@ if (Meteor.isClient) {
   });
 
   Template.review.events({
-    'click .edit-review': function(e){
-      $(e.target).next('.edit-form').toggle(); //unhide hidden Edit node!
+    'click .edit-review-link': function(e){
+       $(e.target).toggleClass("green");
+      $(e.target).parent('li').children('.text-of-review').slideToggle(600);
+      setTimeout(function(){
+          $('.edit-form').toggle(600);
+        }, 300);
+//      $(e.target).next('.edit-form').toggle(600); //unhide hidden Edit node!
+
+      //add the star ratings....
+      var current_rating = $(e.target).parents('li').find('span.rating')[0].outerText.split(' ')[1];
+      console.log("current rating: ", current_rating);
+      $('span.star').slice(0, current_rating).html('★').css('color','gold');
+
+      Session.set('rating',current_rating); 
+
+      //add anonymous...
+      var is_anon = $(e.target).parents('li').find('span.author')[0].outerText.indexOf('Anonymous');
+      if (is_anon != -1) //you are anon
+          $('.edit-form input[name=anon]').prop('checked',true);
+
+    },
+
+    'click .delete' : function(e) {
+
+//WORKS LIKE A CHARM
+      if (confirm("Delete this review?")) {
+         var currentreviewId = this._id;
+         Reviews.remove(currentreviewId);
+    //     Router.go('reviewsList');
+         }
+//       $(e.target).parent('.edit-form').toggle();
     }
+
+
   });
 
   Template.reviewEdit.events({
     'submit form' : function(e) {
        $(e.target).parent('.edit-form').toggle();
-    },
-    'click .delete' : function() {
-       $(e.target).parent('.edit-form').toggle();
     }
+
   });
 
   Template.prof.helpers({
