@@ -204,7 +204,7 @@ ul.reviews li {
 ul.reviews li span.author { color: #333; }
 
 
-ul.reviews li p { 
+ul.reviews li p:not(.gray) { 
 	margin: 1.5% 0%;
 	padding: 0%;
 	color: #888;
@@ -220,6 +220,7 @@ ul.reviews li p {
 p.pleaselogin { padding: 4% 0% 8% 0%;}
 p.message { padding: 2.5% 0% ; margin: 0 !important; }
 
+.review-submit label, .review-edit label { font-size: 1em; }
 .review-submit { 
 	width: 70%; 
 	margin: 0 auto; 
@@ -228,15 +229,16 @@ p.message { padding: 2.5% 0% ; margin: 0 !important; }
 	background: white;
 	padding: 2% 4%;
 	text-align: center;
+	font-size: 0.8em;
+	line-height: 1.3em;
+}
+
+.review-edit {
+	padding: 2% 4%;
+	text-align: center;
 }
 
 form.comment-form { margin-bottom: 0px; }
-
-.review-submit label { font-size: 1em; }
-.review-submit {
-	font-size: 0.8em;
-	line-height: 1.3em;
-	}
 
 .rating-text {display: none;}
 
@@ -263,3 +265,6 @@ textarea[name=body] { width: 100%; height: 100px}
 	}
 
 p.text-of-review { padding: 0 !important; margin: 0 !important }
+
+.review-edit-input { width: 100%; height: 100px !important; 
+	vertical-align: top !important; }

@@ -1,39 +1,49 @@
 <template name="reviewEdit">
 	 <form class="main">
-	 <div class="control-group">
-		 <label class="control-label" for="rating">Rating</label>
-		 <div class="controls">
-	        <div class="rating">
+	 <div class="review-edit control-group">
+		 <label class="control-label" for="rating">Rate on a scale from 1-5:</label>
+        <div class="rating rating-stars">
 	          <span class="star">☆</span>
 	          <span class="star">☆</span>
 	          <span class="star">☆</span>
 	          <span class="star">☆</span>
 	          <span class="star">☆</span>
 	          <div class="rating-text"></div>
-	        </div>
-			<label for="anon">Review anonymously</label>
-	        <input name="anon" type="checkbox">
-		 </div>
-	 </div>
+        </div>
+
+        <br><br><br>
+
+       <p class="gray">Please elaborate on your rating. Would you recommend this professor? </p>
+       <textarea class="review-edit-input" type="text" name="body">{{body}}</textarea>
+       <br>
+        <label for="anon">Post review as <b>Anonymous</b>? </label>
+        <input name="anon" type="checkbox">
+        <br><br>
+
+	<!--<label for="anon">Review anonymously</label>
+    <input name="anon" type="checkbox">
+	</div>
 
 	 <div class="control-group">
 		 <label class="control-label" for="title">Body</label>
 		 <div class="controls">
 		 <input name="body" type="text" value="{{body}}" placeholder="Please review in detail here."/>
 		 </div>
-	 </div>
+	 </div>-->
 	 <div class="control-group">
 		 <div class="controls">
 		 <input type="submit" value="Submit" class="btn btn-primary submit"/>
 		 </div>
 	 </div>
-
+	 <!--
 	 <hr/>
 	 
 	 <div class="control-group">
 		 <div class="controls">
 		 <a class="btn btn-danger delete" href="#">Delete review</a>
 		 </div>
+	 </div>-->
+
 	 </div>
 	 </form>
 </template>
